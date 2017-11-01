@@ -23,7 +23,8 @@ fn get_char_input() -> char {
     input_buff.chars().nth(0).expect("No character")
 }
 
-fn chars_in_string(vc: &Vec<char>, s: &str) -> String {
+fn chars_in_string(vc: &Vec<char>, s: &str, guessed_flag: &mut bool) -> String {
+    *guessed_flag = true;
     let mut out_string = String::with_capacity(s.len());
     for ch_to_check in s.chars() {
         let mut char_guessed = false;
@@ -35,6 +36,7 @@ fn chars_in_string(vc: &Vec<char>, s: &str) -> String {
         }
         if !char_guessed {
             out_string.push('_');
+            *guessed_flag = false;
         } else {
             out_string.push(ch_to_check);
         }
@@ -53,6 +55,8 @@ fn main() {
     let mut wrong_chars = vec!['\0'; 26];
     let mut wrong_char_idx = 0;
 
+    let mut word_guessed = false;
+
     while num_wrong_guesses >= 0 {
         let guess = get_char_input();
 
@@ -67,10 +71,12 @@ fn main() {
             correct_chars[correct_char_idx] = guess;
             correct_char_idx += 1;
         }
-        let feedback = chars_in_string(&correct_chars, STRING_TO_GUESS);
+
+        let feedback = chars_in_string(&correct_chars, STRING_TO_GUESS,
+                                       &mut word_guessed);
         println!("{}", feedback);
 
-        if correct_char_idx == STRING_TO_GUESS.len() {
+        if word_guessed {
             println!("You won!");
             break;
         }
