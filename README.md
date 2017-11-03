@@ -15,3 +15,11 @@ Word Selection
 --------------
 
 The word to guess will be selected randomly from a modified version of [this gist](https://gist.github.com/deekayen/4148741).
+
+TODO
+----
+
+ - Let user guess full word
+ - Show user number of characters to start with
+ - Stop user from guessing same character again
+ - Show guessed characters
