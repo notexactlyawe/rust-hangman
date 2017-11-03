@@ -3,3 +3,6 @@
 name = "hangman"
 version = "0.0.1"
 authors = ["Cameron MacLeod cmacleod170@googlemail.com"]
+
+[dependencies]
+rand = "0.3"

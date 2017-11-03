@@ -1,6 +1,20 @@
-use std::io::{self, Write};
+extern crate rand;
 
-const STRING_TO_GUESS: &'static str = "and";
+use std::io::prelude::*;
+use std::io::{self, Write};
+use std::fs::File;
+use rand::Rng;
+
+
+fn setup() -> String {
+    let mut rng = rand::thread_rng();
+    let idx_word = rng.gen_range(0, 974);
+
+    let mut f = File::open("1-1000.txt").expect("file not found");
+    let mut f_buf = String::new();
+    f.read_to_string(&mut f_buf);
+    String::from(f_buf.lines().nth(idx_word).expect("bad"))
+}
 
 fn index_in_string(c: char, s: &str) -> isize {
     for (idx, check) in s.chars().enumerate() {
@@ -46,6 +60,7 @@ fn chars_in_string(vc: &Vec<char>, s: &str, guessed_flag: &mut bool) -> String {
 }
 
 fn main() {
+    let string_to_guess = setup();
     let mut num_wrong_guesses = 5 as isize;
 
     let mut correct_chars = vec!['\0'; 26];
@@ -60,7 +75,7 @@ fn main() {
     while num_wrong_guesses >= 0 {
         let guess = get_char_input();
 
-        let index = index_in_string(guess, STRING_TO_GUESS);
+        let index = index_in_string(guess, &string_to_guess);
 
         if index == -1 {
             println!("Nope, you have {} guesses remaining", num_wrong_guesses);
@@ -72,7 +87,7 @@ fn main() {
             correct_char_idx += 1;
         }
 
-        let feedback = chars_in_string(&correct_chars, STRING_TO_GUESS,
+        let feedback = chars_in_string(&correct_chars, &string_to_guess,
                                        &mut word_guessed);
         println!("{}", feedback);
 
@@ -80,5 +95,9 @@ fn main() {
             println!("You won!");
             break;
         }
+    }
+
+    if !word_guessed {
+        println!("The word was {}", string_to_guess);
     }
 }
