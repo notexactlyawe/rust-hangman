@@ -25,7 +25,7 @@ fn index_in_string(c: char, s: &str) -> isize {
     -1
 }
 
-fn get_char_input() -> char {
+fn get_char_input(to_guess: &str, guessed_flag: &mut bool) -> char {
     print!("Guess a character> ");
     io::stdout().flush().expect("Failed to flush");
 
@@ -33,6 +33,10 @@ fn get_char_input() -> char {
 
     io::stdin().read_line(&mut input_buff)
         .expect("Failed to read line");
+
+    if input_buff.trim() == to_guess {
+        *guessed_flag = true;
+    }
 
     input_buff.chars().nth(0).expect("No character")
 }
@@ -82,7 +86,12 @@ fn main() {
             break;
         }
 
-        let guess = get_char_input();
+        let guess = get_char_input(&string_to_guess, &mut word_guessed);
+
+        if word_guessed {
+            println!("You won!");
+            break;
+        }
 
         let index = index_in_string(guess, &string_to_guess);
 

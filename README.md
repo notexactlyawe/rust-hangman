@@ -19,6 +19,7 @@ The word to guess will be selected randomly from a modified version of [this gis
 TODO
 ----
 
- - Let user guess full word
  - Stop user from guessing same character again
  - Show guessed characters
+ - Change "guesses" to "guess" for 1 guess
+ - If a user inputs a word, it shouldn't treat the first character of that word as a guess
