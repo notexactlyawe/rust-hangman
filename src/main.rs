@@ -73,6 +73,15 @@ fn main() {
     let mut word_guessed = false;
 
     while num_wrong_guesses >= 0 {
+        let feedback = chars_in_string(&correct_chars, &string_to_guess,
+                                       &mut word_guessed);
+        println!("{}", feedback);
+
+        if word_guessed {
+            println!("You won!");
+            break;
+        }
+
         let guess = get_char_input();
 
         let index = index_in_string(guess, &string_to_guess);
@@ -85,15 +94,6 @@ fn main() {
         } else {
             correct_chars[correct_char_idx] = guess;
             correct_char_idx += 1;
-        }
-
-        let feedback = chars_in_string(&correct_chars, &string_to_guess,
-                                       &mut word_guessed);
-        println!("{}", feedback);
-
-        if word_guessed {
-            println!("You won!");
-            break;
         }
     }
 

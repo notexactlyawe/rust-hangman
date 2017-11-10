@@ -20,6 +20,5 @@ TODO
 ----
 
  - Let user guess full word
- - Show user number of characters to start with
  - Stop user from guessing same character again
  - Show guessed characters
