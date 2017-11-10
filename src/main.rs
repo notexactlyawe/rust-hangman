@@ -96,11 +96,23 @@ fn main() {
         let index = index_in_string(guess, &string_to_guess);
 
         if index == -1 {
-            println!("Nope, you have {} guesses remaining", num_wrong_guesses);
+            if wrong_chars.contains(&guess) {
+                println!("You already guessed that character");
+                continue;
+            }
+            if num_wrong_guesses == 1 {
+                println!("Nope, you have 1 guess remaining");
+            } else {
+                println!("Nope, you have {} guesses remaining", num_wrong_guesses);
+            }
             wrong_chars[wrong_char_idx] = guess;
             wrong_char_idx += 1;
             num_wrong_guesses -= 1;
         } else {
+            if correct_chars.contains(&guess) {
+                println!("You already guessed that character");
+                continue;
+            }
             correct_chars[correct_char_idx] = guess;
             correct_char_idx += 1;
         }
